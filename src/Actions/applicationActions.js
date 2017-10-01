@@ -1,0 +1,39 @@
+import firebase from '../utils/firebaseInit'
+import type {
+    SetLoadingAction,
+    StopLoadingAction,
+    LoadingAction,
+    User,
+    Application,
+    DecisionAction,
+    Conditions
+} from '../Types/types'
+
+type Dispatch=(action:LoadingAction|DecisionAction)=>any
+
+export const setUser:SetUserAction=(user:User)=>({
+    user,
+    type:"SET_USER"
+})
+
+export const apply=(dispatch:Dispatch, user:User, application:Application) => {
+    dispatch({type:"SET_LOADING"})
+    let appRef=firebase.database().ref('apps')
+    const postRef=appRef.push()
+    const {displayName, uid, email}=user
+    const obj={displayName, uid, email, timestamp:firebase.database.ServerValue.TIMESTAMP, ...application}
+    console.log(obj)
+    console.log(postRef.key)
+    postRef.set(obj)
+    let decisionRef=appRef.child(postRef.key).child('decision')
+    decisionRef.on('value', snapshot=>{
+        const decision=snapshot.val()
+        console.log(decision)
+        if(decision!==null){
+            decisionRef.off('value')
+            dispatch({type:"STOP_LOADING"})
+            dispatch({...decision, type:"DECISION"})
+        }
+    })
+}
+
