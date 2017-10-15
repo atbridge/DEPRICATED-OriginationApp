@@ -1,6 +1,5 @@
 //@flow
 import React from 'react'
-import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
@@ -40,7 +39,9 @@ type Props={
         isApproved:boolean
     }|null
 }
-export default withStyles(styles)(({setIncome, submitApp, income, classes, user, loading, decision}:Props)=>loading?<CircularProgress className={classes.progress}/>:[
+export default withStyles(styles)(({setIncome, submitApp, income, classes, user, loading, decision}:Props)=>(
+    loading?<CircularProgress className={classes.progress}/>:
+    [
     <TextField 
         key="income"
         id="income" 
@@ -52,12 +53,16 @@ export default withStyles(styles)(({setIncome, submitApp, income, classes, user,
         helperText={income.errorMsg}
         error={income.errorMsg?true:false}
     />,
-    income.errorMsg?null:<Button 
+    income.errorMsg?null:
+    <Button 
         key="submit" 
         className={classes.button}
         onClick={submitApp(user, {
             income:parseFloat(income.value)
         })}
-    >Submit Application</Button>,
+    >
+        Submit Application
+    </Button>,
     decision&&(decision.isApproved?`Accepted with rate ${decision.conditions.rate} and limit ${decision.conditions.limit}`:"Denied!")
-])
+    ]
+))

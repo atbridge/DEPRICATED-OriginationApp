@@ -1,7 +1,5 @@
 //@flow
 import type {
-    SetUserAction,
-    UnSetUserAction,
     UserAction,
     User
 } from '../Types/types'

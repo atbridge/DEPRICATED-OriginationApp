@@ -1,12 +1,9 @@
 import firebase from '../utils/firebaseInit'
 import type {
-    SetLoadingAction,
-    StopLoadingAction,
     LoadingAction,
     User,
     Application,
-    DecisionAction,
-    Conditions
+    DecisionAction
 } from '../Types/types'
 
 type Dispatch=(action:LoadingAction|DecisionAction)=>any
@@ -21,10 +18,7 @@ export const apply=(dispatch:Dispatch, user:User, application:Application) => {
     let appRef=firebase.database().ref('apps')
     const postRef=appRef.push()
     const {displayName, uid, email}=user
-    const obj={displayName, uid, email, timestamp:firebase.database.ServerValue.TIMESTAMP, ...application}
-    console.log(obj)
-    console.log(postRef.key)
-    postRef.set(obj)
+    postRef.set({displayName, uid, email, timestamp:firebase.database.ServerValue.TIMESTAMP, ...application})
     let decisionRef=appRef.child(postRef.key).child('decision')
     decisionRef.on('value', snapshot=>{
         const decision=snapshot.val()

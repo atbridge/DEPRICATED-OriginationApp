@@ -1,7 +1,6 @@
 //@flow
 import type {
     CreditAction,
-    IncomeAction,
     Income
 } from '../Types/types'
 

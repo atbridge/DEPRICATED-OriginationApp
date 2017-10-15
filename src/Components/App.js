@@ -2,7 +2,7 @@
 import React from 'react'
 import Login from './Login'
 import type {User} from '../Types/types'
-import CreditAppContainer from './CreditAppContainer'
+import MenuContainer from './MenuContainer'
 export default ({user}:{user:User})=>(
-    user?<CreditAppContainer/>:<Login/>
+    user?<MenuContainer/>:<Login/>
 )

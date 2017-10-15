@@ -1,7 +1,6 @@
 //@flow
 import React from 'react'
 import firebase, {provider} from '../utils/firebaseInit'
-import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 
 import Button from 'material-ui/Button';

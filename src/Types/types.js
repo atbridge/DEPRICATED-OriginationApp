@@ -11,6 +11,11 @@ export type IncomeAction={
     errorMsg?:string
 } 
 
+export type ToggleDrawerAction={
+    type:"SET_TOGGLE_DRAWER",
+    isOpen:boolean
+}
+
 export type Income={
     value:string,
     errorMsg?:string

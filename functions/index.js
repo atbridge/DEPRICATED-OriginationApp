@@ -39,10 +39,5 @@ exports.decision = functions.database.ref('apps/{appId}')
             decision.isApproved=true
         }
     }
-    //console.log('Uppercasing', event.params.pushId, original);
-   // const uppercase = original.toUpperCase();
-    // You must return a Promise when performing asynchronous tasks inside a Functions such as
-    // writing to the Firebase Realtime Database.
-    // Setting an "uppercase" sibling in the Realtime Database returns a Promise.
     return event.data.ref.child('decision').set(decision)
 })
