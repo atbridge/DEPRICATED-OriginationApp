@@ -94,7 +94,24 @@ const styles = theme => ({
     },
 })
 
-
+const routes=[
+    {
+        label:"Apply",
+        icon:<SwapHoriz />,
+        link:"/apply",
+        component:CreditAppContainer
+    },{
+        label:"Pay",
+        icon:<Payment />,
+        link:"/pay",
+        component:CreditAppContainer
+    },{
+        label:"Balance",
+        icon:<AccountBalanceWallet />,
+        link:"/balance",
+        component:CreditAppContainer
+    }
+]
 export default withStyles(styles, { withTheme: true })(({classes, open, handleDrawerOpen, handleDrawerClose, theme})=>(
 <Router>
 <div >
@@ -129,31 +146,22 @@ export default withStyles(styles, { withTheme: true })(({classes, open, handleDr
         </div>
             <Divider />
             <List className={classes.list}>
-                <ListItem button component={Link} to="/apply">
-                    <ListItemIcon>
-                        <SwapHoriz />
-                    </ListItemIcon>
-                    <ListItemText primary="Apply" />
-                </ListItem> 
-                <ListItem button component={Link} to="/pay">
-                    <ListItemIcon>
-                        <Payment />
-                    </ListItemIcon>
-                    <ListItemText primary="Pay" />
-                </ListItem> 
-                <ListItem button component={Link} to="/balance">
-                    <ListItemIcon>
-                        <AccountBalanceWallet />
-                    </ListItemIcon>
-                    <ListItemText primary="Balance" />
-                </ListItem> 
+                {routes.map(({label, icon, link})=>(
+                    <ListItem key={link} button component={Link} to={link}>
+                        <ListItemIcon>
+                            {icon}
+                        </ListItemIcon>
+                        <ListItemText primary={label} />
+                    </ListItem> 
+                ))}
             </List>
         </div>
     </Drawer>
     <main className={classes.content}>
-        <Route path='/apply' component={CreditAppContainer}/>
-        <Route path='/pay' component={CreditAppContainer}/>
-        <Route path='/balance' component={CreditAppContainer}/>
+        {routes.map(({component, link})=>(
+            <Route path={link} key={link} component={component}/>
+        ))}
+        
     </main>
     </div>
     </div>
